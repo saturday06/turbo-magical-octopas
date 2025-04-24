@@ -1,0 +1,43 @@
+name: actions
+
+permissions: {}
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the Docker image
+        run: docker build .
+
+  lint:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - name: npm ci
+        run: npm ci
+      - name: npm run format
+        run: npm run format
+      - name: git diff
+        run: git diff --exit-code
+
+  super-linter:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # for super-linter
+      - name: Super-Linter
+        uses: super-linter/super-linter@v7.3.0
+        env:
+          LINTER_RULES_PATH: /
+          LOG_LEVEL: NOTICE
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

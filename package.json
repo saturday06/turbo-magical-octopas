@@ -1,0 +1,10 @@
+{
+  "name": "node-js-tools-for-turbo-magical-octopas",
+  "private": true,
+  "scripts": {
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "prettier": "3.5.3"
+  }
+}

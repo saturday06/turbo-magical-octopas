@@ -1,0 +1,7 @@
+*~
+*.orig
+.DS_Store
+/.idea/
+/.vs/
+/.vscode/
+/node_modules/
