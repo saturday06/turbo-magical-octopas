@@ -1,0 +1,6 @@
+*~
+*.orig
+.DS_Store
+/.idea/
+/.vs/
+/.vscode/
