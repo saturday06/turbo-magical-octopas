@@ -28,6 +28,9 @@ INSTALL_PACKAGES
 
 RUN bash <<'INSTALL_NOVNC'
   set -eu -o pipefail
+
+  cd ~
+
   mkdir noVNC
   curl -LSf --retry 5 https://github.com/novnc/noVNC/archive/cdfb33665195eb9a73fb00feb6ebaccd1068cd50.tar.gz | tar -C noVNC --strip-component=1 -zxf -
 
@@ -58,7 +61,7 @@ RUN bash <<'START_NOVNC'
   
   (
     set +e
-    (while true; do /home/developer/noVNC/utils/novnc_proxy --listen 6080 --vnc 127.0.0.1:5900; done) 2>&1 | tee var/log/noVNC.log
+    (while true; do "$HOME/noVNC/utils/novnc_proxy" --listen 6080 --vnc 127.0.0.1:5900; done) 2>&1 | tee var/log/noVNC.log
   ) &
   timeout 5 sh -c "until nc -z 127.0.0.1 6080; do sleep 0.1; done"
   timeout 5 sh -c "until curl --fail http://127.0.0.1:6080; do sleep 0.1; done"
