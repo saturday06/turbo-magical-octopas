@@ -2,7 +2,7 @@ FROM ubuntu:jammy
 
 RUN bash <<'INSTALL_PACKAGES'
   set -eu -o pipefail
-  export DEBIAN_FRONTEND noninteractive
+  export DEBIAN_FRONTEND=noninteractive
   apt-get update
   apt-get install \
     "blender=*" \
